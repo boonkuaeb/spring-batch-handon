@@ -1,5 +1,7 @@
 package com.infybuzz.config;
 
+import com.infybuzz.service.FirstTasklet;
+import com.infybuzz.service.SecondTasklet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
@@ -28,6 +30,12 @@ public class SampleJob {
 	@Autowired
 	private StepBuilderFactory stepBuilderFactory;
 
+	@Autowired
+	private FirstTasklet firstTasklet;
+
+	@Autowired
+	private SecondTasklet secondTasklet;
+
 	@Bean
 	public Job firstJob() throws InterruptedException {
 		logger.info("1 Job");
@@ -41,37 +49,37 @@ public class SampleJob {
 	private Step firstStep() throws InterruptedException {
 		logger.info("1.1 Step One,sleep");
 		return stepBuilderFactory.get("First Step")
-				.tasklet(firstTask())
+				.tasklet(firstTasklet)
 				.build();
 	}
 
-	private Tasklet firstTask() {
-		return new Tasklet() {
-
-			@Override
-			public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-				logger.info("1.1.1 Tasklet One,This is first tasklet step");
-				return RepeatStatus.FINISHED;
-			}
-		};
-	}
+//	private Tasklet firstTask() {
+//		return new Tasklet() {
+//
+//			@Override
+//			public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+//				logger.info("1.1.1 Tasklet One,This is first tasklet step");
+//				return RepeatStatus.FINISHED;
+//			}
+//		};
+//	}
 	
 	private Step secondStep() throws InterruptedException {
 		logger.info("1.2 Step One");
 		return stepBuilderFactory.get("Second Step")
-				.tasklet(secondTask())
+				.tasklet(secondTasklet)
 				.build();
 	}
 	
-	private Tasklet secondTask() {
-		return new Tasklet() {
-
-			@Override
-			public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-				logger.info("1.2.1 Tasklet Two, This is second tasklet step");
-				return RepeatStatus.FINISHED;
-			}
-		};
-	}
+//	private Tasklet secondTask() {
+//		return new Tasklet() {
+//
+//			@Override
+//			public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+//				logger.info("1.2.1 Tasklet Two, This is second tasklet step");
+//				return RepeatStatus.FINISHED;
+//			}
+//		};
+//	}
 
 }
