@@ -1,5 +1,6 @@
 package com.infybuzz.config;
 
+import com.infybuzz.listener.FirstJobListener;
 import com.infybuzz.service.FirstTasklet;
 import com.infybuzz.service.SecondTasklet;
 import org.slf4j.Logger;
@@ -37,6 +38,9 @@ public class SampleJob {
 	@Autowired
 	private SecondTasklet secondTasklet;
 
+	@Autowired
+	private FirstJobListener firstJobListener;
+
 	@Bean
 	public Job firstJob() throws InterruptedException {
 		logger.info("1 Job");
@@ -45,6 +49,7 @@ public class SampleJob {
 				.incrementer(new RunIdIncrementer())
 				.start(firstStep())// Read all tasklet in firstStep
 				.next(secondStep())// Read all tasklet in secondStep
+				.listener(firstJobListener)
 				.build(); // Execute Tasklet
 	}
 
