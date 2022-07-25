@@ -9,7 +9,7 @@ public class FirstJobListener implements JobExecutionListener {
 
     @Override
     public void beforeJob(JobExecution jobExecution) {
-        System.out.println("Before jobs "+jobExecution.getJobInstance().getJobName());
+        System.out.println("\nBefore jobs "+jobExecution.getJobInstance().getJobName());
         System.out.println("Job Params "+jobExecution.getJobParameters());
         System.out.println("Job Execute Context "+jobExecution.getExecutionContext());
 
@@ -18,7 +18,7 @@ public class FirstJobListener implements JobExecutionListener {
 
     @Override
     public void afterJob(JobExecution jobExecution) {
-        System.out.println("After jobs "+jobExecution.getJobInstance().getJobName());
+        System.out.println("\nAfter jobs "+jobExecution.getJobInstance().getJobName());
         System.out.println("Job Params "+jobExecution.getJobParameters());
         System.out.println("Job Execute Context "+jobExecution.getExecutionContext());
 

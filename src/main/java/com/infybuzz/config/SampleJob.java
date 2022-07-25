@@ -1,6 +1,7 @@
 package com.infybuzz.config;
 
 import com.infybuzz.listener.FirstJobListener;
+import com.infybuzz.listener.FirstStepListener;
 import com.infybuzz.service.FirstTasklet;
 import com.infybuzz.service.SecondTasklet;
 import org.slf4j.Logger;
@@ -41,9 +42,12 @@ public class SampleJob {
 	@Autowired
 	private FirstJobListener firstJobListener;
 
+	@Autowired
+	private FirstStepListener firstStepListener;
+
 	@Bean
 	public Job firstJob() throws InterruptedException {
-		logger.info("1 Job");
+		System.out.println("1 Job");
 
 		return jobBuilderFactory.get("First Job")
 				.incrementer(new RunIdIncrementer())
@@ -54,39 +58,21 @@ public class SampleJob {
 	}
 
 	private Step firstStep() throws InterruptedException {
-		logger.info("1.1 Step One,sleep");
+		System.out.println("1.1 Step One,sleep");
 		return stepBuilderFactory.get("First Step")
 				.tasklet(firstTasklet)
+				.listener(firstStepListener)
 				.build();
 	}
 
-//	private Tasklet firstTask() {
-//		return new Tasklet() {
-//
-//			@Override
-//			public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-//				logger.info("1.1.1 Tasklet One,This is first tasklet step");
-//				return RepeatStatus.FINISHED;
-//			}
-//		};
-//	}
 	
 	private Step secondStep() throws InterruptedException {
-		logger.info("1.2 Step One");
+		System.out.println("1.2 Step One");
 		return stepBuilderFactory.get("Second Step")
 				.tasklet(secondTasklet)
 				.build();
 	}
 	
-//	private Tasklet secondTask() {
-//		return new Tasklet() {
-//
-//			@Override
-//			public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-//				logger.info("1.2.1 Tasklet Two, This is second tasklet step");
-//				return RepeatStatus.FINISHED;
-//			}
-//		};
-//	}
+
 
 }
