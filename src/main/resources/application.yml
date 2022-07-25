@@ -1,0 +1,15 @@
+logging:
+  level:
+    root: WARN
+    com.infybuzz: TRACE
+
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3307/spring_batch_db
+    username: local_user
+    password: rootpwd
+
+  batch:
+    jdbc:
+      initialize-schema: always
